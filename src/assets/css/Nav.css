@@ -1,0 +1,12 @@
+.navdisplay li{
+    color :aqua;
+    padding: 5px 15px;
+    list-style: none;
+}
+
+.navdisplay{
+    background-color: black;
+    display: flex;
+}
+
+
