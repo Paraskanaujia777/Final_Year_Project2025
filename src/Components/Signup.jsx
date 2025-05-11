@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Navigate } from "react-router-dom";
+
 function Signup() {
 
     const [firstName, setFirstName] = useState('');
@@ -9,11 +9,13 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     // const auth = localStorage.setItem('signupdata', JSON.stringify({ firstName, lastName, email, password }))
 
-    const addUser = async () => {
+    const addUser = async (e) => {
+
+        e.preventDefault();
 
         try {
             let x = await fetch("http://localhost:4000/signUp", {
@@ -25,9 +27,10 @@ function Signup() {
                 },
             });
             x = await x.json();
-            console.log(x);
-            localStorage.setItem('userData', JSON.stringify(x))
-            // navigate('/')
+            console.log(x.user.firstName);
+            localStorage.setItem('userData', JSON.stringify(x.user))
+            alert(x.message || "signup failed");
+            navigate('/');
         } catch (error) {
             console.log('error occured', error)
 
@@ -48,7 +51,7 @@ function Signup() {
             <div className="d-flex flex-column  col-6 mx-auto my-5 ">
                 <h1 className="text-center mb-4 ">SignUp</h1>
 
-                <form action="">
+                <form onSubmit={addUser}>
 
                     <div className="mb-3 d-flex">
                         <label htmlFor="exampleFormControlInput1" className="form-label col-3 ">First Name :</label>
@@ -69,7 +72,7 @@ function Signup() {
                             onChange={(e) => setPassword(e.target.value)} />
                     </div>
 
-                    <button type="submit" onClick={addUser} className="btn btn-primary col-3 m-auto">Submit</button>
+                    <button type="submit"  className="btn btn-primary col-3 m-auto">Submit</button>
 
                 </form>
 

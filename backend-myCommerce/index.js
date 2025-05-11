@@ -8,6 +8,9 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const SECRET_KEY = "yourSecretKey"; // Store this securely in .env file
 
 
 app.get('/allproducts', async (req, res) => {
@@ -27,46 +30,74 @@ app.post('/signUp', async (req, res) => {
         let data = req.body;
         let user = new userModel(data);
         user = await user.save()
-        res.json(user);
+        res.json(user , { message: "User registered successfully" });
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(400).json({ error: "User registration failed" });
     }
 })
 
 app.post('/login', async (req, res) => {
 
-    let data = req.body;
-    if (data.email && data.password) {
+    const { email, password } = req.body;
 
-        // let x = data.firstName
-        let findUser = await userModel.findOne(data);
-        if (findUser) {
-            res.json(findUser)
-            // console.log(findUser)
-        }
-        else {
-            res.json({ err: "no user found" })
-        }
-    }
-    else {
-        res.json({err:'enter both email and password'})
-    }
+    if (!email || !password) {
+        return res.status(400).json({ eror: "please enter all fields" })
+    };
+
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+        return res.status(401).json({ error: "Invalid email or password" })
+    };
+    // check if password is correct
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch)
+        return res.status(401).json({ error: "Invalid email or password" });
+
+    // Create JWT Token
+    const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, {
+        expiresIn: "1h"
+    });
+
+    // send the token to the client
+
+    res.json({ message: "Login successful", token , user });
+    // res.json(user);
+
+
+
 
 })
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+  
+    if (!token) return res.sendStatus(401);
+  
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+      if (err) return res.sendStatus(403);
+      req.user = user;
+      next();
+    });
+  }
 
 
 // Route to fetch products from Fake Store API
 app.get('/api/products', async (req, res) => {
     try {
-      const response = await axios.get('https://fakestoreapi.com/products');
-      res.json(response.data);
+        const response = await axios.get('https://fakestoreapi.com/products');
+        res.json(response.data);
     } catch (error) {
-      console.error('Error fetching products:', error);
-      res.status(500).json({ message: 'Error fetching products' });
+        console.error('Error fetching products:', error);
+        res.status(500).json({ message: 'Error fetching products' });
     }
-  });
+});
 
-  app.get('/api/products/:id', async(req,res)=>{
+app.get('/api/products/:id', async (req, res) => {
     try {
         const response = await axios.get(`https://fakestoreapi.com/products/${req.params.id}`);
         res.json(response.data);
@@ -76,7 +107,7 @@ app.get('/api/products', async (req, res) => {
     }
 
 
-  })
+})
 
 
 
