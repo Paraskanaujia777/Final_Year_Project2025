@@ -25,11 +25,10 @@ function Signin() {
        const result = await x.json();
         console.log(result);
         // setName(result.firstName);
-        console.log(result.firstName);
-
-
-        if(result.email){
-            alert(` ${result.firstName} user found`);
+        console.log(result.user.firstName);
+        localStorage.setItem('userData', JSON.stringify(result.user))
+        if(result.user.firstName){
+            alert(`Welcome Back ${result.user.firstName} ${result.user.lastName}`);
             navigate('/');
 
         }

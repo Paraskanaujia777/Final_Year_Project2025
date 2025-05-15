@@ -3,13 +3,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link, Outlet } from "react-router-dom";
 import '../assets/css/Nav.css'
 import Home from "./HomePage";
+import SearchedData from "./SearchData";
 
 export const userContext = createContext();
 
-function Navbar() {
+
+const Navbar = ({setResult})=> {
 
     const [search, setSearch] = useState("");
-    const [result, setResult] = useState([]);
+    
 
 
 
@@ -17,10 +19,10 @@ function Navbar() {
 
         if (search) {
             try {
-                let products = await fetch(`http://localhost:4000/api/products/${search}`)
+                let products = await fetch(`http://localhost:4000/api/search?q=${search}`)
                 products = await products.json();
                 setResult(products);
-                console.log(result)
+                console.log(products)
                 // console.log(products)
 
             } catch (error) {
@@ -95,7 +97,7 @@ function Navbar() {
                             <div className="w-20">
                                 <input className="form-control me-2 " onChange={(e) => { setSearch(e.target.value) }} type="search" placeholder="Search Products" aria-label="Search" />
                             </div>
-                            <button className="btn btn-outline-success" onClick={findData} type="submit">Search</button>
+                            <button className="btn btn-outline-success" onClick={findData} type="submit">Search Amazon / Flipkart</button>
                             <form />
                         </div>
                     </div>
@@ -110,6 +112,9 @@ function Navbar() {
                 {/* <Outlet/> */}
 
             {/* </userContext.Provider> */}
+
+            {/* <SearchedData result={result} /> */}
+            {/* <Outlet /> */}
         </>
     )
 }

@@ -12,9 +12,16 @@ db.once('open', function () {
 
 
 const categorySchema = new mongoose.Schema({
-  name: { type: String },
-  type: { type: String },
-  cost: { type: Number }
+  title: { type: String },
+  product_link: { type: String },
+  product_id: { type: String },
+  source: { type: String },
+  price: { type: String },
+  rating: { type: Number },
+  reviews: { type: String },
+  delivery: { type: String },
+  thumbnail: { type: String },
+  searchQuery: { type: String }
 })
 const userSchema = new mongoose.Schema({
   firstName: { type: String },

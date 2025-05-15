@@ -26,13 +26,15 @@ function Signup() {
 
                 },
             });
-            x = await x.json();
-            console.log(x.user.firstName);
-            localStorage.setItem('userData', JSON.stringify(x.user))
-            alert(x.message || "signup failed");
+            
+            const result = await x.json();
+            console.log(result.user.firstName);
+            localStorage.setItem('userData', JSON.stringify(result.user))
+            alert(result.message || "signup failed");
             navigate('/');
         } catch (error) {
             console.log('error occured', error)
+            alert('user already exists')
 
         }
 
