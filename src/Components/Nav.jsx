@@ -4,13 +4,14 @@ import { Link, Outlet } from "react-router-dom";
 import '../assets/css/Nav.css'
 import Home from "./HomePage";
 import SearchedData from "./SearchData";
+import GeminiSummary from "./Aicomponent";
 
 export const userContext = createContext();
 
 
-const Navbar = ({setResult})=> {
+const Navbar = ({setResult , search , setSearch})=> {
 
-    const [search, setSearch] = useState("");
+    // const [search, setSearch] = useState("");
     
 
 
@@ -78,17 +79,15 @@ const Navbar = ({setResult})=> {
                                     {/* <a className="nav-link " href="#">BestDeals</a> */}
                                     <Link to='/signup'> <span className="nav-link " >SignUp</span></Link>
                                 </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Categories
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li><a className="dropdown-item" href="#">Men</a></li>
-                                        <li><a className="dropdown-item" href="#">Women</a></li>
-                                        {/* <li><hr className="dropdown-divider"/></li> */}
-                                        <li><a className="dropdown-item" href="#">Children</a></li>
-                                    </ul>
+                                <li className="nav-item">
+                                    {/* <a className="nav-link " href="#">BestDeals</a> */}
+                                    <Link to='/airesponse'> <span className="nav-link " >AI Result</span></Link>
                                 </li>
+                                <li className="nav-item">
+                                    {/* <a className="nav-link " href="#">BestDeals</a> */}
+                                    <Link to='/about'> <span className="nav-link " >About Us</span></Link>
+                                </li>
+                                
                                 {/* <li className="nav-item">
                                 <a className="nav-link " aria-disabled="true">Disabled</a>
                             </li> */}
@@ -97,7 +96,7 @@ const Navbar = ({setResult})=> {
                             <div className="w-20">
                                 <input className="form-control me-2 " onChange={(e) => { setSearch(e.target.value) }} type="search" placeholder="Search Products" aria-label="Search" />
                             </div>
-                            <button className="btn btn-outline-success" onClick={findData} type="submit">Search Amazon / Flipkart</button>
+                            <button className="btn btn-outline-success" onClick={findData } type="submit">Search Amazon / Flipkart</button>
                             <form />
                         </div>
                     </div>

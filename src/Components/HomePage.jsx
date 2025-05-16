@@ -177,6 +177,8 @@ const Home = ({ result }) => {
                     </div>
 
 
+
+
                     // <div className="card m-3 shadow-sm border-1" style={{ width: "20rem", borderRadius: "15px", overflow: "hidden" }}>
                     //     <img
                     //         src={item.thumbnail}
@@ -208,6 +210,13 @@ const Home = ({ result }) => {
                 ))}
 
             </div>
+
+            <button
+                className="btn btn-secondary position-fixed bottom-0 end-0 m-4"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+                ↑ Top
+            </button>
 
             {/* <div className="d-flex justify-content-between pt-5 flex-wrap mx-4">
                 {alldata}

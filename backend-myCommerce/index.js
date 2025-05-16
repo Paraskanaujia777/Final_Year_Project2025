@@ -29,10 +29,27 @@ app.get('/allproducts', async (req, res) => {
 
 app.post('/signUp', async (req, res) => {
   try {
-    let data = req.body;
-    let user = new userModel(data);
+    let {firstName , lastName , email , password}= req.body;
+
+    // Check if all required fields are present
+
+     if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
+    // checking if user already exist
+
+     const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ error: "User already exists" });
+    } 
+
+    
+    let user = new userModel({firstName ,lastName ,email ,password});
     user = await user.save()
     res.json({ user, message: "User registered successfully" });
+    
+    
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: "User registration failed" });
@@ -169,6 +186,53 @@ if (!data || data.length === 0) {
   }
 });
 
+
+
+// integrating gemini api
+
+app.post('/api/gemini-summary', async (req, res) => {
+  const { title } = req.body;
+
+  const prompt = `Give details about ${title} and list its pros and cons on the basis of its features, price, and reviews.
+  also give response in such a way that it can be showed in a card format. only give results not anything like hope u like the results in card and other things. prices should be in rupees and not dollars`;
+
+
+  try {
+    const response = await axios.post(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+      {
+        contents: [{
+          // role: "user",
+          parts: [{ text: prompt }]
+        }]
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          key: process.env.GEMINI_API_KEY
+        }
+      }
+    );
+
+    const geminiReply = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "No summary available";
+     res.json({ summary: geminiReply });
+    // res.send(response);
+    // res.json({ summary: geminiReply });
+    console.log(geminiReply);
+  } catch (error) {
+    console.error('Gemini API error:', error.message);
+    res.status(500).json({ error: 'Failed to generate summary' });
+  }
+});
+
+
+
+
+
+
+// finished integrating gemini api
 
 //  flipkart search api by ecommerceapi.io
 
