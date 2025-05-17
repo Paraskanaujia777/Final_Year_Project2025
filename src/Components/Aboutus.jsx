@@ -4,7 +4,7 @@ import '../assets/css/about.css'
 
 const teamMembers = [
     {
-        name: "Paras Kanojia",
+        name: "Paras Kanaujia",
         role: "Full Stack Developer",
         image: "../src/assets/media/paras.jpg",
         linkedin: "https://www.linkedin.com/in/paras-kanaujia/",
@@ -12,14 +12,14 @@ const teamMembers = [
     },
     {
         name: "Soumya",
-        role: "UI/UX Designer",
+        role: "Frontend Designer",
         image: "../src/assets/media/soumya3.jpg",
         linkedin: "https://www.linkedin.com/in/soumya-669039319",
         github: "https://github.com/18soumya",
     },
     {
         name: "Shambhavi Mishra",
-        role: "Backend Engineer",
+        role: "Frontend Engineer",
         image: "../src/assets/media/shambhavi.jpg",
         linkedin: "https://www.linkedin.com/in/shambhavi-mishra-07b833275",
         github: "https://github.com/Shambhavi-Mishra-28",
@@ -68,13 +68,13 @@ const AboutUs = () => {
                 <h1 className="display-5 fw-bold">About Us</h1>
                 <div className="col-lg-10 mx-auto">
                     <p className="lead text-muted mt-3">
-                        Welcome to <strong>SmartCompare</strong>, your ultimate destination for smarter and faster online shopping. In today’s fast-paced digital world, finding the best deals across e-commerce platforms can be time-consuming and confusing — that’s where we come in.
+                        Welcome to <strong>Compario</strong>, your ultimate destination for smarter and faster online shopping. In today’s fast-paced digital world, finding the best deals across e-commerce platforms can be time-consuming and confusing — that’s where we come in.
                     </p>
                     <p className="lead text-muted mt-3">
-                        We are a team of developers, designers, and tech enthusiasts committed to simplifying your shopping experience. Our intelligent price comparison engine aggregates product listings from multiple platforms like <strong>Amazon</strong> and <strong>Flipkart</strong> to help you make well-informed decisions in just seconds.
+                        We are a team of developers, designers, and tech enthusiasts committed to simplifying your shopping experience. Our intelligent price comparison engine aggregates product listings from multiple platforms like <strong>Amazon</strong> , <strong>Walmart</strong> and <strong>eBay</strong> to help you make well-informed decisions in just seconds.
                     </p>
                     <p className="lead text-muted mt-3">
-                        With an intuitive interface, real-time price updates, and insightful product summaries powered by AI, we aim to give you an edge in online shopping. Whether you're a casual buyer or a savvy bargain hunter, <strong>SmartCompare</strong> is built to serve your needs.
+                        With an intuitive interface, real-time price updates, and insightful product summaries powered by AI, we aim to give you an edge in online shopping. Whether you're a casual buyer or a savvy bargain hunter, <strong>Compario</strong> is built to serve your needs.
                     </p>
                     <p className="lead text-muted mt-3">
                         Our mission is to empower consumers with transparency, save time and money, and promote a smarter way to shop online. We believe in user-focused design, trustworthy technology, and delivering real value with every feature we build.

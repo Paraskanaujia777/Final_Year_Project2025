@@ -60,7 +60,7 @@ const Navbar = ({setResult , search , setSearch})=> {
             {/* <userContext.Provider value={result}> */}
                 <nav className="navbar navbar-expand-lg bg-body-tertiary px-4 position-relative  ">
                     <div className="container-fluid   ">
-                        <a className="navbar-brand" href="#"><img src="../src/assets/media/finalyearprojectlogo.webp" alt="" className="w-50 h-50" /></a>
+                        <a className="navbar-brand" href="#"><img src="../src/assets/media/Finallogo.png" alt="" className="w-50 h-50" /></a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>

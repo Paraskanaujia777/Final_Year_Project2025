@@ -33,7 +33,7 @@ function Signup() {
       if (result?.user) {
         localStorage.setItem('userData', JSON.stringify(result.user));
         setShowSuccess(true);
-        setTimeout(() => navigate('/'), 4000); // Redirect after showing success
+        setTimeout(() => navigate('/'), 40000); // Redirect after showing success
       } else {
         setErrorMessage(result.message || "Signup failed. Please try again.");
         setShowError(true);
