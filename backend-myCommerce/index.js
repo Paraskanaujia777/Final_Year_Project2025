@@ -5,7 +5,7 @@ const axios = require('axios');
 const env = require('dotenv').config();
 
 const db = require('./db.js')
-const { categoryModel, userModel } = require('./db.js');
+const { categoryModel, userModel, feedbackModel } = require('./db.js');
 const app = express();
 
 app.use(express.json());
@@ -29,27 +29,27 @@ app.get('/allproducts', async (req, res) => {
 
 app.post('/signUp', async (req, res) => {
   try {
-    let {firstName , lastName , email , password}= req.body;
+    let { firstName, lastName, email, password } = req.body;
 
     // Check if all required fields are present
 
-     if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return res.status(400).json({ error: "All fields are required." });
     }
 
     // checking if user already exist
 
-     const existingUser = await userModel.findOne({ email });
+    const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ error: "User already exists" });
-    } 
+    }
 
-    
-    let user = new userModel({firstName ,lastName ,email ,password});
+
+    let user = new userModel({ firstName, lastName, email, password });
     user = await user.save()
     res.json({ user, message: "User registered successfully" });
-    
-    
+
+
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: "User registration failed" });
@@ -88,6 +88,30 @@ app.post('/login', async (req, res) => {
 
 
 
+
+})
+
+
+app.post('/api/feedback', async (req, res) => {
+  try {
+    let { Fullname, Email, Message } = req.body;
+
+    if (!Fullname || !Email || !Message) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+    let data = new feedbackModel({
+      Fullname,
+      Email,
+      Message
+    })
+    await data.save()
+    res.json(data);
+
+
+  } catch (error) {
+    res.json({ error: "failed to store feedback" })
+
+  }
 
 })
 
@@ -150,10 +174,10 @@ app.get('/api/search', async (req, res) => {
   };
 
   try {
-    const response = await axios.get('https://api.ecommerceapi.io/google_shopping/', { params : params });
+    const response = await axios.get('https://api.ecommerceapi.io/google_shopping/', { params: params });
     const data = response.data.shopping_results;
 
-if (!data || data.length === 0) {
+    if (!data || data.length === 0) {
       return res.status(404).json({ error: "No search results found" });
     }
 
@@ -167,10 +191,10 @@ if (!data || data.length === 0) {
       product_id: item.product_id,
       source: item.source,
       price: item.price,
-      rating : item.rating,
-      reviews : item.reviews,
-      delivery :item.delivery,
-      thumbnail : item.thumbnail,
+      rating: item.rating,
+      reviews: item.reviews,
+      delivery: item.delivery,
+      thumbnail: item.thumbnail,
       searchQuery: userQuery
     }));
 
@@ -217,7 +241,7 @@ app.post('/api/gemini-summary', async (req, res) => {
     );
 
     const geminiReply = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "No summary available";
-     res.json({ summary: geminiReply });
+    res.json({ summary: geminiReply });
     // res.send(response);
     // res.json({ summary: geminiReply });
     console.log(geminiReply);

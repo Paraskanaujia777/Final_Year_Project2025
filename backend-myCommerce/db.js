@@ -23,11 +23,19 @@ const categorySchema = new mongoose.Schema({
   thumbnail: { type: String },
   searchQuery: { type: String }
 })
+
 const userSchema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String , unique : true },
   password: { type: String }
+})
+
+const feedbackSchema = new mongoose.Schema({
+  Fullname : {type : String },
+  Email : {type : String , unique : true },
+  Message : {type : String }
+
 })
 
 // Hash password before saving
@@ -39,6 +47,7 @@ userSchema.pre('save', async function (next) {
 
 const categoryModel = mongoose.model('t1_category', categorySchema);
 const userModel = mongoose.model('t2_users', userSchema);
+const feedbackModel = mongoose.model('users_feedback' , feedbackSchema);
 
 
 
@@ -46,7 +55,8 @@ const userModel = mongoose.model('t2_users', userSchema);
 module.exports = {
   db,
   categoryModel,
-  userModel
+  userModel,
+  feedbackModel
 };
 // module.exports = userModel;
 // module.exports = prodHead;

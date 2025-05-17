@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import '../assets/css/about.css'
 
@@ -45,6 +45,10 @@ const testimonials = [
 ];
 
 const AboutUs = () => {
+
+     const [Fullname , setFullname] = useState("");
+        const [ Email , setEmail] = useState("");
+        const [Message , setMessage] = useState("");
     useEffect(() => {
         const elements = document.querySelectorAll(".fade-in");
         elements.forEach((el, idx) => {
@@ -53,6 +57,34 @@ const AboutUs = () => {
             }, idx * 200);
         });
     }, []);
+
+    const storeFeedback = async (e) => {
+
+
+        e.preventDefault();
+
+       
+
+
+
+        try {
+            const x = await fetch("http://localhost:4000/api/feedback", {
+                method: 'post',
+                body: JSON.stringify({Fullname, Email, Message }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            const result = await x.json() ; 
+        
+
+        } catch (error) {
+            console.log("error occured :" , error);
+
+        }
+
+    }
 
     return (
         <div className="container py-5 ">
@@ -100,7 +132,7 @@ const AboutUs = () => {
                                     <h5 className="card-title">{member.name}</h5>
                                     <p className="card-text text-muted">{member.role}</p>
                                     <div className="d-flex justify-content-center gap-3 mt-3">
-                                        <a href={member.linkedin} className="text-primary" target="_blank" rel="noopener noreferrer"> 
+                                        <a href={member.linkedin} className="text-primary" target="_blank" rel="noopener noreferrer">
                                             <FaLinkedin size={20} />
                                         </a>
                                         <a href={member.github} className="text-dark" target="_blank" rel="noopener noreferrer">
@@ -159,21 +191,21 @@ const AboutUs = () => {
                 <div className="container p-4 p-md-5 bg-white shadow rounded-4">
                     <h2 className="text-center mb-4 fw-bold">Get in Touch</h2>
                     <p className="text-center text-muted mb-5">We'd love to hear from you! Whether you have a question or just want to say hello, our team is ready to help.</p>
-                    <form className="row g-4">
+                    <form onSubmit={storeFeedback} className="row g-4">
                         <div className="col-md-6">
                             <label htmlFor="name" className="form-label fw-semibold">Full Name</label>
-                            <input type="text" className="form-control rounded-pill px-4 py-2 shadow-sm" id="name" placeholder="Enter your name" required />
+                            <input type="text" className="form-control rounded-pill px-4 py-2 shadow-sm" id="name" placeholder="Enter your name" required onChange={(e) => setFullname(e.target.value)} />
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="email" className="form-label fw-semibold">Email Address</label>
-                            <input type="email" className="form-control rounded-pill px-4 py-2 shadow-sm" id="email" placeholder="Enter your email" required />
+                            <input type="email" className="form-control rounded-pill px-4 py-2 shadow-sm" id="email" placeholder="Enter your email" required onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="col-12">
                             <label htmlFor="message" className="form-label fw-semibold">Your Message</label>
-                            <textarea className="form-control rounded-4 px-4 py-3 shadow-sm" id="message" rows="5" placeholder="Write your message here..." required></textarea>
+                            <textarea className="form-control rounded-4 px-4 py-3 shadow-sm" id="message" rows="5" placeholder="Write your message here..." required onChange={(e) => setMessage(e.target.value)}></textarea>
                         </div>
                         <div className="col-12 text-center">
-                            <button type="submit" className="btn btn-primary px-5 py-2 rounded-pill fw-semibold shadow-sm">Send Message</button>
+                            <button  type="submit" className="btn btn-primary px-5 py-2 rounded-pill fw-semibold shadow-sm">Send Message</button>
                         </div>
                     </form>
                 </div>

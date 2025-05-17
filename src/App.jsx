@@ -34,6 +34,7 @@ function App() {
 
     <Outlet/>
 
+    <div className="main-content">
     <Routes>
 
       <Route path='/' element={<Home result ={result}/> }></Route>
@@ -47,6 +48,7 @@ function App() {
       <Route></Route>
 
     </Routes>
+    </div>
 
 
     <Footer/>
